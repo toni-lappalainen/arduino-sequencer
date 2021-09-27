@@ -9,12 +9,13 @@ void setup()
 {
   Serial.begin(9600);
   initDraw();
+  initInterface();
   initSeq();
 }
 
 void loop()
 {
   static long currentMillis;
-  getKeypress();
+  checkKeys();
   runSeq();
 }

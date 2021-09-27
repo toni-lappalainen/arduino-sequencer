@@ -3,6 +3,9 @@
 #include "Sequencer.h"
 #include "logging.h"
 
+char lastKey;
+void keypadEventTest(KeypadEvent key);
+
 //=============== keypad setup
 const byte ROWS = 4; //four rows
 const byte COLS = 4; //four columns
@@ -30,12 +33,24 @@ enum controlStates
 
 enum controlStates controlState = GATES;
 
+void initInterface()
+{
+    customKeypad.addEventListener(keypadEventTest);
+    customKeypad.setHoldTime(500);
+}
+
+void checkKeys()
+{
+    customKeypad.getKey();
+}
+
 void getKeypress()
 {
-    char customKey = customKeypad.getKey();
-    if (customKey)
+    //char customKey = customKeypad.getKey();
+    logInt("test", lastKey);
+    if (lastKey)
     {
-        int key = (int)customKey;
+        int key = (int)lastKey;
         if (key == 48)
             key = 0;
         //  logInt("keyChar", customKey);
@@ -49,10 +64,11 @@ void getKeypress()
 
 void getKeyHold()
 {
-    char customKey = customKeypad.getKey();
-    if (customKey)
+    //char customKey = customKeypad.getKey();
+    logInt("testHold", lastKey);
+    if (lastKey)
     {
-        int key = (int)customKey;
+        int key = (int)lastKey;
         if (key == 48)
             key = 0;
         switch (key)
@@ -75,8 +91,10 @@ void getKeyHold()
 
 int keyHold = 0;
 
-void keypadEvent(KeypadEvent key)
+void keypadEventTest(KeypadEvent key)
 {
+    logInt("event", 1);
+    lastKey = key;
     switch (customKeypad.getState())
     {
     case PRESSED:

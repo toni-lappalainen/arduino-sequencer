@@ -14,15 +14,15 @@ int stepInMillis;        // step length in millisecond
 int chosenStep = 0;      // index of step that is chosen for editing;
 int analogNoteValue = 0; //
 
+void tempoSet()
+{
+   stepInMillis = 60000 / (bpm * stepLength);
+}
+
 void initSeq()
 {
    tempoSet();
    initDAC();
-}
-
-void tempoSet()
-{
-   stepInMillis = 60000 / (bpm * stepLength);
 }
 
 // TODO: Not used anywhere, delete?
